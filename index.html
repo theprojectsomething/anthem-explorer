@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="theme-color" content="#333333">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" type="image/png" href="data:image/png;base64," />
+
+<title>Anthem Awards: Finalists 2021</title>
+
+<script>
+((el) => {
+const light = 'P8/x8AAwMCAO+ip1s';
+const dark = 'Nk+A8AAQUBAScY42Y';
+const matcher = window.matchMedia('(prefers-color-scheme: dark)');
+const setIcon = ({ matches }) => {
+  el.href = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42m${matches ? light : dark}AAAAASUVORK5CYII=`;
+}
+matcher.addEventListener('change', setIcon);
+setIcon(matcher);
+
+})(document.head.querySelector('link[rel="icon"]'));
+</script>
+
+<style>
+:root {
+  --light: #EEF;
+  --dark: #222;
+  --fg: var(--dark);
+  --bg: var(--light);
+}
+
+html.theme-toggled {
+  --fg: var(--light);
+  --bg: var(--dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: var(--light);
+    --bg: var(--dark);
+  }
+
+  html.theme-toggled {
+    --fg: var(--dark);
+    --bg: var(--light);
+  }
+}
+
+
+html {
+  font-family: monospace;
+  background: var(--bg);
+  color: var(--fg);
+}
+body {
+  margin:  0;
+}
+a,
+a:visited {
+  text-decoration: underline dotted;
+  color: inherit;
+}
+a:hover {
+  text-decoration: underline;
+}
+header {
+  margin: 1rem;
+  display: flex;
+  align-items:  center;
+}
+header br {
+  display: none;
+}
+#menu-toggle {
+  display: none;
+}
+label[for="menu-toggle"] {
+  font-size: 2em;
+  width: 1.4em;
+  text-align: center;
+  margin-right: 0.8em;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 1.4em;
+}
+label[for="menu-toggle"]:hover {
+  box-shadow: 0 0 0 1px;
+}
+label[for="menu-toggle"]::before {
+  content: '☰';
+  padding-bottom: 0.2em;
+}
+#theme-toggle {
+  display: none;
+}
+.theme-toggle {
+  position:  absolute;
+  margin: 0.2rem;
+  padding: 0.2rem;
+  top:  0;
+  right:  0;
+  width:  1em;
+  height:  1em;
+  font-size:  2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.theme-toggle:hover {
+  box-shadow: 0 0 0 1px;
+}
+
+#search {
+  padding: 0.5em 0.5em 0.5em 1em;
+  font-size:  2em;
+  line-height: 2rem;
+  font-family: inherit;
+  border: none;
+  width: 100%;
+  margin: 1rem;
+  box-shadow: inset 0 0 0 1px;
+  max-height: 2em;
+  color: var(--fg);
+  background: var(--bg);
+}
+#search:focus {
+  color: var(--bg);
+  background: var(--fg);
+}
+#search::placeholder {
+  opacity: 1;
+  position: relative;
+  left: -2em;
+}
+#app {
+  display: flex;
+}
+#app:not(.ready)::before {
+  content:  'loading ...';
+  margin:  1rem;
+}
+#app:not(.ready) > * {
+  display: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+h2 {
+  margin: 0 0 0.75em;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.65em;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  max-height: 100vh;
+  overflow: scroll;
+  max-width: 60em;
+}
+
+.nav-column  {
+  padding: 1rem;
+  min-width: 15em;
+  max-width: 50%;
+  box-sizing: border-box;
+  width:  50%;
+}
+.nav ul {
+  margin: 0;
+}
+.nav label {
+  display: flex;
+  align-items: center;
+  line-height: 1.3em;
+}
+.nav span {
+  margin:  0.5em 0.4em;
+}
+.filter-item {
+  margin-bottom: 2em;
+}
+.filter-toggle,
+.filter-toggle:not(:checked) ~ ul,
+.active-list label:not(.active) > * {
+  display: none;
+}
+
+.filter-toggle ~ label h2::after {
+  content: ' [+]';
+}
+
+.filter-toggle:checked ~ label h2::after {
+  content: ' [-]';
+}
+
+.org-list,
+.agency-list {
+  max-height:  30em;
+  overflow: auto;
+}
+.entries {
+  padding: 1rem;
+  margin-left: min(1em, 1vw);
+  max-width:  60vw;
+  box-sizing: border-box;
+}
+.entries h2[data-count]::after {
+  content:  ' (' attr(data-count) ')';
+}
+.entry {
+  margin: 0.65em 0;
+}
+.entry h3 {
+  margin: 0 0 0.2em;
+}
+.entry-category {
+  opacity:  0.6;
+  font-style: italic;
+}
+.entry-details {
+  font-size: 0.9em;
+}
+.entry-details *:empty,
+.entry-client:empty ~ .entry-clienttype {
+  display: none;
+}
+.entry-client::before {
+  content: 'for ';
+}
+.entry-clienttype[data-type="Internal"] {
+  display: none;
+}
+.entry-clienttype::before {
+  content: '(';
+}
+.entry-clienttype::after {
+  content: ')';
+}
+.entry-toggle {
+  display: none;
+}
+.entry-toggle:not(:checked) ~ .entry-preview {
+  display: none;
+}
+.entry-label {
+  display: block;
+}
+.entry-label:hover {
+  box-shadow: -9px 0 0 var(--bg), -10px 0 0 0;
+}
+.entry-toggle:checked ~ .entry-label {
+  box-shadow: -9px 0 0 var(--bg), -14px 0 0 0;
+}
+.entry-preview {
+  display: flex;
+  margin: 0.5em 0 1em;
+}
+.entry-image {
+  background-size: cover;
+  width: 20em;
+  flex-grow: 1;
+  max-width: 30%;
+  aspect-ratio: 1.75;
+  background-color: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--fg);
+  margin-right: 1.5em;
+}
+.entry-preview ul {
+  line-height: 1.2em;
+  font-size:  0.7em;
+  display: flex;
+  margin-top: 0.2em;
+  flex-wrap:  wrap;
+}
+.entry-preview li {
+  margin-bottom: 0.4em;
+}
+
+.entry-preview li[data-url=""] {
+  display: none;
+}
+.entry-credits {
+  margin-top: 1em;
+  position: relative;
+  font-size: 0.7em;
+}
+.entry-credits a:hover::before {
+  content: attr(title);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  padding: 0.5em;
+  width:  30em;
+  background: var(--bg);
+  border:  1px dotted;
+}
+
+footer {
+  margin:  1rem;
+}
+
+@media (max-width: 767px) {
+  label[for="menu-toggle"] {
+    display: flex;
+  }
+
+  #menu-toggle:checked ~ header label[for="menu-toggle"]::before {
+    content: '×';
+    padding-bottom: 0;
+  }
+
+  h1 {
+    font-size: 4.5vw;
+  }
+
+  h1 br {
+    display: inherit;
+  }
+
+  #search {
+    font-size:  3.8vw;
+  }
+
+  .nav {
+    top: 0;
+    position: sticky;
+    transform: translateX(-100%);
+    width: 65vw;
+    background: var(--bg);
+    height: 100%;
+    box-shadow: inset -1px 0 0;
+  }
+
+  .nav-column {
+    width: 100%;
+    max-width: none;
+  }
+
+  .nav-column + .nav-column {
+    padding-top: 0;
+    margin-top:  -1rem;
+  }
+
+  .entries {
+    min-width: 100vw;
+    transform: translateX(0);
+    z-index: -1;
+    font-size: min(1em, 3vw);
+  }
+
+  #app {
+    min-width: 100vw;
+  }
+
+  .nav, .entries {
+    transition: transform 0.2s;
+  }
+
+  #menu-toggle:checked ~ #app {
+    position: relative;
+    overflow: hidden;
+    height: calc(100vh - 17vw - 2rem);
+  }
+
+  #menu-toggle:checked ~ #app .nav {
+    transform: translateX(0);
+  }
+
+  #menu-toggle:checked ~ #app .entries {
+    position: absolute;
+    transform: translateX(65vw);
+    opacity: 0.5;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<input type="checkbox" id="menu-toggle">
+<header>
+  <label for="menu-toggle" class="toggle"></label> <h1><a href="https://www.anthemawards.com/">Anthem Awards</a>: <br>Finalists 2021</h1>
+
+  <label class="theme-toggle" title="toggle theme"><input type="checkbox" id="theme-toggle">☼</label>
+</header>
+
+<div id="app">
+
+
+  <nav class="nav">
+    <input id="search" placeholder="🔍 Search entries" autocomplete="off">
+    <div class="nav-column">
+      <div class="filter-item">
+        <input type="checkbox" class="filter-toggle" checked id="filter-cause">
+        <label for="filter-cause"><h2>Cause</h2></label>
+        <ul class="nav-item cause-list">
+          <% for (const item of list) { %>
+            <li>
+              <label><input type="radio" name="cause" value="<%= item.group %>"><span><%= item.label %></span></label>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" class="filter-toggle" checked id="filter-type">
+        <label for="filter-type"><h2>Entry Type</h2></label>
+        <ul class="nav-item type-list">
+          <% for (const item of list) { %>
+            <li>
+              <label><input type="radio" name="type" value="<%= item.group %>"><span><%= item.label %></span></label>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" class="filter-toggle" checked id="filter-group">
+        <label for="filter-group"><h2>Category Group</h2></label>
+        <ul class="nav-item group-list">
+          <% for (const item of list) { %>
+            <li>
+              <label><input type="radio" name="group"  value="<%= item.group %>"><span><%= item.label %></span></label>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" class="filter-toggle" id="filter-org">
+        <label for="filter-org"><h2>Organisation</h2></label>
+        <ul class="nav-item org-list active-list">
+          <% for (const item of list) { %>
+            <li>
+              <label><input type="radio" name="entrant" data-category="<%= item.category %>"  value="<%= item.entry %>"><span><%= item.label %></span></label>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" class="filter-toggle" id="filter-agency">
+        <label for="filter-agency"><h2>Agency</h2></label>
+        <ul class="nav-item agency-list active-list">
+          <% for (const item of list) { %>
+            <li>
+              <label><input type="radio" name="entrant" data-category="<%= item.category %>" value="<%= item.entry %>"><span><%= item.label %></span></label>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+    <div class="nav-item nav-column">
+      <h2>Category</h2>
+      <ul class="category-list active-list">
+        <% for (const item of list) { %>
+          <li class="list-item">
+            <label><input type="radio" name="category" value="<%= item.category %>"><span><%= item.label %></span></label>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="entries">
+    <h2>Entries</h2>
+    <ul class="entries-list">
+      <% for (const item of list) { %>
+
+        <li class="entry">
+          <input class="entry-toggle" type="radio" name="entry-toggle" id="entry-<%= item.Id %>">
+          <label class="entry-label" for="entry-<%= item.Id %>">
+            <h3><%= item.Title %></h3>
+
+            <div class="entry-details">
+              <span class="entry-org"><%= item.Organization %></span>
+              <% if (item.ClientType !== 'Internal') { %>
+                (<%= item.ClientType %>) for <%= item.Client %>
+              <% } %>
+            </div>
+            <small class="entry-category"><%= item.Categories %></small><br>
+          </label>
+          <div class="entry-preview">
+            <div class="entry-image" style="background-image:url(https://d2k8d39mrr2t20.cloudfront.net/2022/thumbnails/2022_<%= item.Id %>.jpg)"></div>
+            <div class="entry-preview-content">
+              <% if (item.Urls) { %>
+                <div class="entry-links">
+                  <small>Entry:</small>
+                  <a href="<%= item.Urls[0] %>" target="_blank"><strong>
+                    <%= item.Urls[0].replace(new RegExp('^https?:\S{2}(?:www.)?([^/]*).*$'), '$1') %>
+                  </strong></a>
+                  <% if (item.Urls.length > 1) { %>
+                    <ul>
+                      <% for (const [i, url] of Object.entries(item.Urls.slice(1))) { %>
+                        <li data-url="<%= url %>">[<a href="<%= url %>">Link <%= ('0' + (+i + 2)).slice(-2) %></a>]</li>
+                      <% } %>
+                    </ul>
+                  <% } %>
+                </div>
+              <% } %>
+              <% if (item.Files) { %>
+                <div class="entry-downloads">
+                  <small>Entry Downloads:</small>
+                  <ul>
+                    <% for (const [i, url] of Object.entries(item.Files)) { %>
+                      <li data-url="<%= url %>">[<a href="<%= url %>" download>File <%= ('0' + (+i + 1)).slice(-2) %></a>]</li>
+                    <% } %>
+                  </ul>
+                </div>
+              <% } %>
+              <% if (item.Credits.length) { %>
+                <div class="entry-credits">[<a title="<%= item.Credits %>" href="#">Credits</a>]</div>
+              <% } %>
+            </div>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <small><i>Data ingested from the <a href="https://www.anthemawards.com/finalists/">Anthem Awards finalists feed</a>. Winners announced in Feb.</i></small>
+</footer>
+
+
+<script type="module">
+
+
+const store = {
+  json: {
+    finalists: {
+      url: 'https://frosty-disk-b41d.theprojectsomething.com/finalists',
+    },
+    categories: {
+      url: 'https://frosty-disk-b41d.theprojectsomething.com/categories'
+    },
+  },
+  nav: {
+    cause: [],
+    type: [],
+    group: [],
+    category: [],
+    agency: [],
+    org: [],
+  },
+  template: {},
+  filter: {},
+  pieces: {}, 
+  search: {},
+};
+
+const app = {
+  el: {
+    app: document.getElementById('app'),
+    theme: document.getElementById('theme-toggle'),
+    search: document.getElementById('search'),
+    nav: document.querySelector('.nav'),
+    cause: document.querySelector('.cause-list'),
+    type: document.querySelector('.type-list'),
+    group: document.querySelector('.group-list'),
+    org: document.querySelector('.org-list'),
+    agency: document.querySelector('.agency-list'),
+    category: document.querySelector('.category-list'),
+    entriesTitle: document.querySelector('.entries h2'),
+    entries: document.querySelector('.entries-list'),
+  },
+  async init() {
+    await app.load();
+
+    for (const [id, navItem] of Object.entries(store.nav)) {
+      app.template(id, navItem.sort((a, b) => a.label.localeCompare(b.label)));
+    }
+
+    let changed;
+
+    app.el.nav.addEventListener('change', (e) => {
+      if (e.target.classList.contains('filter-toggle')) return;
+      changed = e.target;
+      const { value, checked, name } = changed;
+      const list = checked ? value.split(',') : null;
+      const filter = { [name]: list };
+      if (name === 'entrant') {
+        filter.entrantCategory = checked ? e.target.dataset.category.split(',') : null;
+      }
+      app.filter(filter);
+    });
+
+    app.el.nav.addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() !== 'input' || e.target.classList.contains('filter-toggle')) return;
+      setTimeout(() => {
+        if (!changed) {
+          e.target.checked = false;
+          const { name } = e.target;
+          const filter = { [name]: null };
+          if (name === 'entrant') {
+            filter.entrantCategory = null;
+          }
+          app.filter(filter);
+        }
+        changed = null;
+      });
+    });
+
+    app.el.theme.addEventListener('click', app.theme);
+    if (app.el.theme.checked) app.theme();
+
+
+    app.filter();
+    app.el.app.classList.add('ready');
+
+    app.el.search.addEventListener('input', e => app.search(e.target.value));
+  },
+  theme() {
+    document.documentElement.classList.toggle('theme-toggled', app.el.theme.checked);
+  },
+  search(inputQuery) {
+    const query = inputQuery.trim().toLowerCase();
+    if (!query) {
+      store.search = {
+        query,
+        words: [],
+        piecesShortlist: {},
+        pieces: {},
+        result: null,
+      };
+      app.filter({ search: null });
+    } else if (query !== store.search.query) {
+      const words = [...new Set(query.split(/\s+/g))];
+      const lastWord = words[words.length - 1];
+
+      let piecesShortlist = store.pieces;
+      let wordList = words;
+
+      // test if only the last word has been updated
+      // if yes we can refine our previous search, if not we should start again
+      if (store.search.query) {
+        if (query.slice(0, -lastWord.length) === store.search.query.slice(0, -store.search.words[store.search.words.length - 1].length)) {
+          piecesShortlist = store.search.piecesShortlist;
+          wordList = words.slice(-1);
+        } else  if (query.slice(0, -1).trim() === store.search.query) {
+          piecesShortlist = store.search.piecesShortlist = store.search.pieces;
+          wordList = words.slice(-1);
+        }
+      }
+
+      const result = {};
+      const pieces = {};
+      for (const [id, piece] of Object.entries(piecesShortlist)) {
+        let score = 0;
+
+        for (const word of wordList) {
+          for (const pieceWord of piece.search) {
+            if (pieceWord === word) {
+              score += 1;
+              continue;
+            }
+            if (pieceWord.startsWith(word)) {
+              score += word.length / pieceWord.length;
+              continue;
+            }
+            if (pieceWord.endsWith(word)) {
+              score += word.length / pieceWord.length;
+              continue;
+            }
+            if (Math.abs(pieceWord.length - word.length) < 2
+              && pieceWord[0] === word[0]
+              && pieceWord.replace(/[aeiou\d]/g, '').startsWith(word.replace(/[aeiou\d]/g, ''))) {
+              score += 0.1;
+            } 
+          }
+        }
+
+        if (score) {
+          pieces[id] = piece;
+          result[id] = { entry: piece.entry, score };
+        }
+      }
+
+      const list = Object.values(result).sort((a, b) => b.score - a.score)
+        .reduce((_, r) => _.concat(...r.entry), []);
+
+      store.search = {
+        query,
+        words,
+        piecesShortlist,
+        pieces,
+        result,
+      };
+      app.filter({ search: list });
+    }
+  },
+  tm: a =>
+    Function('_,o',`with(_){o=${JSON.stringify(a).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<%=(.+?)%>/g,'"+($1)+"').replace(/<%(.+?)%>/g,'";$1;o+="')};}return o`),
+  template(id, data) {
+    const el = app.el[id];
+    if (!store.template[id]) {
+      store.template[id] = app.tm(el.innerHTML);
+    }
+    el.innerHTML = store.template[id]({ list: data });
+  },
+  fetch: (url, options) =>
+    fetch(url, options).then(e => e.json()).catch(() => null),
+  async load() {
+    const json = {};
+    const loaders = [];
+    for (const [jsonId, params] of Object.entries(store.json)) {
+      const loader = app.fetch(params.url, params.options)
+      .then(data => {
+        json[jsonId] = data;  
+      });
+      loaders.push(loader);
+    }
+
+    try {
+      await Promise.all(loaders);
+    } catch (e) {
+      return;
+    }
+
+    store.entries = json.finalists.Data;
+
+    for (const [causeId, label] of Object.entries(json.categories.MediaTypes)) {
+      const cause = { label, cause: causeId, group: [], category: [] };
+      store.nav.cause.push(cause);
+
+      for (const [groupId, groupLabel] of Object.entries(json.categories.CategoryTypesPerMediaTypeID[causeId])) {
+        const label = groupLabel.replace(/ \(.*/, '');
+        const group = store.nav.group.find(group => group.label === label)
+          || { label, group: [] };
+
+        // add new category group to the group list
+        if (!group.group.length) {
+          store.nav.group.push(group);
+        }
+
+        // add the group id to the cause and category group
+        cause.group.push(groupId);
+        group.group.push(groupId);
+
+        const typeLabel = groupLabel.replace(/.*\(([^)]+).*/, '$1');
+        const type = store.nav.type.find(type => type.label === typeLabel)
+          || { label: typeLabel, group: [], category: [] };
+
+        // add new category group to the group list
+        if (!type.group.length) {
+          store.nav.type.push(type);
+        }
+
+        // add the group id to the entry type
+        type.group.push(groupId);
+      }
+
+      for (const [categoryId, categoryLabel] of Object.entries(json.categories.CategoriesPerMediaTypeID[causeId])) {
+        const label = categoryLabel.replace(/.*- /, '');
+        const category = store.nav.category.find(category => category.label === label)
+          || { label, category: [], group: [] };
+
+        // add new category to the category list
+        if (!category.category.length) {
+          store.nav.category.push(category);
+        }
+
+
+        // add the category id to the cause and category
+        cause.category.push(categoryId);
+        category.category.push(categoryId);
+      }
+    }
+
+    const unique = [];
+    for (const entry of store.entries) {
+      const orgLabel = entry.ClientType === 'Internal' ? entry.Organization : entry.Client;
+      const org = store.nav.org.find(org => org.label === orgLabel)
+        || { label: orgLabel, category: [], group: [], entry: [] };
+
+      // add new org to the org list
+      if (!org.entry.length) {
+        store.nav.org.push(org);
+      }
+
+      // add the category id to the org
+      org.category.push(entry.CatID);
+      org.group.push(entry.CatTypeID);
+      org.entry.push(entry.Id);
+
+      if (entry.ClientType !== 'Internal') {
+        const agencyLabel = entry.Organization + (entry.ClientType === 'Agency' ? '' : '(PR)');
+        const agency = store.nav.agency.find(agency => agency.label === agencyLabel)
+          || { label: agencyLabel, category: [], group: [], entry: [] };
+
+        // add new org to the org list
+        if (!agency.entry.length) {
+          store.nav.agency.push(agency);
+        }
+
+        // add the category id to the agency
+        agency.category.push(entry.CatID);
+        agency.group.push(entry.CatTypeID);
+        agency.entry.push(entry.Id);
+      }
+
+      if (!store.pieces[entry.PieceID]) {
+        const search = [...new Set([entry.Title].concat(entry.Organization, entry.Client || []).join(' ').toLowerCase().trim().split(/\s+/g))];
+        store.pieces[entry.PieceID] = {
+          entry: [],
+          search,
+        };
+      }
+      store.pieces[entry.PieceID].entry.push(entry.Id);
+    }
+  },
+  filter(filter) {
+    Object.assign(store.filter, filter);
+
+    store.isFiltered = false;
+    for (const filterVal of Object.values(store.filter)) {
+      if (filterVal) {
+        store.isFiltered = true;
+        break;
+      }
+    }
+
+    const filtered = store.isFiltered ? [] : store.entries;
+    const filteredCategories = [];
+
+    if (store.isFiltered) {
+      for (const entry of store.entries) {
+        let include;
+        const category = entry.CatID.toString();
+        const group = entry.CatTypeID.toString();
+
+        if (store.filter.cause) {
+          include = store.filter.cause.includes(group);
+        }
+
+        if (store.filter.type) {
+          include = include !== false && store.filter.type.includes(group);
+        }        
+
+        if (store.filter.group) {
+          include = include !== false && store.filter.group.includes(group);
+        }
+
+        if (store.filter.entrantCategory) {
+          include = include !== false && store.filter.entrantCategory.includes(category);
+        }
+
+        // before we filter by individual categories, let's store matches to date
+        // we'll use this to hide non-matching categories
+        if (include !== false && !filteredCategories.includes(category)) {
+          filteredCategories.push(category);
+        }
+
+        if (store.filter.entrant) {
+          include = include !== false && store.filter.entrant.includes(entry.Id.toString());
+        }
+
+        if (store.filter.search) {
+          include = include !== false && store.filter.search.includes(entry.Id);
+        }
+
+        if (store.filter.category) {
+          include = include !== false && store.filter.category.includes(category);
+        }
+
+        if (include) {
+          filtered.push(entry);
+        }
+      }
+    }
+
+    store.filteredCategories = filteredCategories;
+    store.filtered = filtered;
+    app.render();
+  },
+  render() {
+    const list = [].concat(store.filtered || []).sort((a, b) => a.Title.replace(/[^\w]/, '').localeCompare(b.Title.replace(/[^\w]/, '')));
+    app.template('entries', list);
+
+    for (const el of document.querySelectorAll('input[name="entrant"]')) {
+      const active = el.value &&
+        (!store.isFiltered ||
+        store.filteredCategories.find(category => el.dataset.category.includes(category)));
+      if (el.checked && !active) {
+        el.checked = false;
+        app.filter({ entrant: null, entrantCategory: null });
+        return;
+      }
+      el.parentElement.classList.toggle('active', !!active);
+    }
+
+    for (const el of app.el.category.querySelectorAll('input')) {
+      const active = el.value &&
+        (!store.isFiltered ||
+        store.filteredCategories.find(category => el.value.includes(category)));
+      if (el.checked && !active) {
+        el.checked = false;
+        app.filter({ category: null });
+        return;
+      }
+      el.parentElement.classList.toggle('active', !!active);
+    }
+
+    app.el.entriesTitle.dataset.count = list.length;
+  },
+};
+
+app.init();
+
+</script>
+</body>
+</html>
