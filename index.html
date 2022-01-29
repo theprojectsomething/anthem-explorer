@@ -108,6 +108,7 @@ label[for="menu-toggle"]::before {
   height:  1em;
   font-size:  2em;
   display: flex;
+  line-height: 0;
   justify-content: center;
   align-items: center;
 }
@@ -315,6 +316,10 @@ footer {
     display: flex;
   }
 
+  #menu-toggle:checked ~ header label[for="menu-toggle"] {
+    box-shadow: 0 0 0 1px;
+  }
+
   #menu-toggle:checked ~ header label[for="menu-toggle"]::before {
     content: '×';
     padding-bottom: 0;
@@ -355,7 +360,6 @@ footer {
   .entries {
     min-width: 100vw;
     transform: translateX(0);
-    z-index: -1;
     font-size: min(1em, 3vw);
   }
 
@@ -380,6 +384,7 @@ footer {
   #menu-toggle:checked ~ #app .entries {
     position: absolute;
     transform: translateX(65vw);
+    z-index: -1;
     opacity: 0.5;
   }
 }
